@@ -93,43 +93,12 @@ while ((view = [_usingQueue anyObject])) {
 }
 
 ```
-## 2、 IndexedTableView
-*自定义带有字母索引条的tableview，字母索引条采用复用池机制
 
+
+*使用案例
 ```
 
-- (void)reloadIndexedBar{
-if (viewContaner == nil) {
-viewContaner = [[UIView alloc] initWithFrame:CGRectZero];
-viewContaner.backgroundColor = [UIColor whiteColor];
 
-// 避免索引条随着table滚动
-[self.superview insertSubview:viewContaner aboveSubview:self];
-}
-
-if (viewReusePool == nil) {
-viewReusePool = [[ViewReusePool alloc] init];
-}
-
-// 标记所有视图为可重用状态
-[viewReusePool reset];
-
-NSArray <NSString *> *arrayTitles = nil;
-if ([self.indexedBarDataSource respondsToSelector:@selector(indexTitlesForIndexedTableView:)]) {
-arrayTitles = [self.indexedBarDataSource indexTitlesForIndexedTableView:self];
-}
-
-if (!arrayTitles || arrayTitles.count <= 0) {
-[viewContaner setHidden:YES];
-return;
-}
-
-NSUInteger count = arrayTitles.count;
-CGFloat buttonWidth = 60;
-CGFloat buttonHeight = self.frame.size.height / count;
-
-for (int i = 0; i < [arrayTitles count]; i++) {
-NSString *title = [arrayTitles objectAtIndex:i];
 // 从重用池当中取一个Button出来
 UIButton *button = (UIButton *)[viewReusePool dequeueReusableView];
 // 如果没有可重用的Buuton重新创建一个
@@ -144,14 +113,7 @@ NSLog(@"新创建一个Button");
 NSLog(@"Button 重用了");
 }
 [viewContaner addSubview:button];
-[button setTitle:title forState:UIControlStateNormal];
-[button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
 
-[button setFrame:CGRectMake(0, i * buttonHeight, buttonWidth, buttonHeight)];
-
-}
-[viewContaner setHidden:NO];
-viewContaner.frame = CGRectMake(self.frame.origin.x + self.frame.size.width - buttonWidth, self.frame.origin.y, buttonWidth, buttonHeight);
 
 
 }
