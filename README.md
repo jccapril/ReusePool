@@ -1,6 +1,6 @@
 # ReusePool
 
-简书：https://www.jianshu.com/p/8a6d5835c273
+简书：https://www.jianshu.com/p/ecacf354ca37
 
 
 ### 前言
